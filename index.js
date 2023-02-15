@@ -10,19 +10,28 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-const comicsRoute = "./routes/comics.js";
-const charactersRoute = "./routes/characters.js";
+const comicsRoute = "./routes/comics";
 app.use(comicsRoute);
+
+const charactersRoute = "./routes/characters";
 app.use(charactersRoute);
 
-app.get("/", (req, res) => {
-  res.json("Salut les voyous");
+app.get("/", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://lereacteur-marvel-api.herokuapp.com/"
+    );
+    console.log(response.data);
+    res.status(200).json("Hi friends");
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
 });
 
 app.all("*", (req, res) => {
-  res.status(404).json({ message: "Cette route n'existe pas" });
+  res.status(404).json({ message: "Thi route doesn't exist" });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server started 🤕");
 });
