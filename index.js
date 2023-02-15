@@ -12,6 +12,8 @@ app.use(morgan("dev"));
 
 const comicsRoute = "./routes/comics.js";
 const charactersRoute = "./routes/characters.js";
+app.use(comicsRoute);
+app.use(charactersRoute);
 
 app.get("/", (req, res) => {
   res.json("Salut les voyous");
