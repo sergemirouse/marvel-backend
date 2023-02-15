@@ -10,40 +10,17 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
+const comicsRoute = "./routes/comics.js";
+const charactersRoute = "./routes/characters.js";
+
 app.get("/", (req, res) => {
   res.json("Salut les voyous");
 });
 
-app.get("/comics", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=GezY6DFKlYr7gi4z"
-    );
-    res.status(200).json(response.data);
-    console.log(response.data);
-    console.log("Ma route fonctionne");
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-app.get("/comics/:characterId", async (req, res) => {
-  try {
-    const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/:characterId?apiKey=${process.env.MARVEL_API_KEY}`
-    );
-    res.status(200).json(response.data);
-    console.log(response.data);
-    console.log("Ma route fonctionne");
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+app.all("*", (req, res) => {
+  res.status(404).json({ message: "Cette route n'existe pas" });
 });
 
 app.listen(3000, () => {
   console.log("Server started 🤕");
-});
-
-app.all("*", (req, res) => {
-  res.status(404).json({ message: "Cette route n'existe pas" });
 });

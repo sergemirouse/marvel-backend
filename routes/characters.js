@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/comics", async (req, res) => {
+router.get("/characters", async (req, res) => {
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.status(200).json(response.data);
     console.log(response.data);
@@ -14,10 +14,10 @@ router.get("/comics", async (req, res) => {
   }
 });
 
-router.get("/comics/:characterId", async (req, res) => {
+router.get("/character/:characterId", async (req, res) => {
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${req.query.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/character/${req.query.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.status(200).json(response.data);
     console.log(response.data);
