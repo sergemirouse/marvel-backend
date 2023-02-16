@@ -10,10 +10,10 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-const comicsRoute = "./routes/comics";
+const comicsRoute = require("./routes/comics");
 app.use(comicsRoute);
 
-const charactersRoute = "./routes/characters";
+const charactersRoute = require("./routes/characters");
 app.use(charactersRoute);
 
 app.get("/", async (req, res) => {
