@@ -10,11 +10,17 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGODB_URI);
+
 const comicsRoute = require("./routes/comics");
 app.use(comicsRoute);
 
 const charactersRoute = require("./routes/characters");
 app.use(charactersRoute);
+
+const userRoutes = require("./routes/user");
+app.use(userRoutes);
 
 app.get("/", async (req, res) => {
   try {
@@ -29,7 +35,7 @@ app.get("/", async (req, res) => {
 });
 
 app.all("*", (req, res) => {
-  res.status(404).json({ message: "Thi route doesn't exist" });
+  res.status(404).json({ message: "Wrong way dude" });
 });
 
 app.listen(process.env.PORT || 3000, () => {
