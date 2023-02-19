@@ -6,10 +6,10 @@ router.get("/comics", async (req, res) => {
   let { limit, skip, title } = req.query;
 
   if (!limit) {
-    limit = "";
+    limit = 100;
   }
   if (!skip) {
-    skip = "";
+    skip = (skip - 1) * limit;
   }
   if (!title) {
     title = "";

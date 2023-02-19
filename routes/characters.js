@@ -6,10 +6,10 @@ router.get("/characters", async (req, res) => {
   let { limit, skip, name } = req.query;
 
   if (!limit) {
-    limit = "";
+    limit = 100;
   }
   if (!skip) {
-    skip = "";
+    skip = (skip - 1) * limit;
   }
   if (!name) {
     name = "";
