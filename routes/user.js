@@ -36,7 +36,7 @@ router.post("/user/signup", async (req, res) => {
     if (emailRegistered) {
       return res
         .status(400)
-        .json({ error: { message: "This email address already exists" } });
+        .json({ message: "This email address already exists" });
     }
 
     await newUser.save();
@@ -73,7 +73,7 @@ router.post("/user/login", async (req, res) => {
     console.log(Answer);
 
     if (hash !== emailValidation.hash) {
-      return res.status(401).json({ error: { message: "Unauthorized" } });
+      return res.status(401).json({ message: "Unauthorized" });
     } else {
       res.json(Answer);
     }
