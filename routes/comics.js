@@ -8,7 +8,7 @@ router.get("/comics", async (req, res) => {
   if (!limit) {
     limit = 100;
   }
-  if (!skip) {
+  if (skip) {
     skip = (skip - 1) * limit;
   }
   if (!title) {
