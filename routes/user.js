@@ -60,6 +60,9 @@ router.post("/user/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const emailValidation = await User.findOne({ email: email });
+    if (!emailValidation) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
     const hash = SHA256(emailValidation.salt + password).toString(encBase64);
     //console.log(hash);
 
