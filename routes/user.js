@@ -89,7 +89,7 @@ router.post("/user/login", async (req, res) => {
 router.get("/user/favorites", async (req, res) => {
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.status(200).json(response.data);
   } catch (error) {
