@@ -6,6 +6,7 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 
 const User = require("../models/User");
+const { default: axios } = require("axios");
 
 router.post("/user/signup", async (req, res) => {
   try {
@@ -41,7 +42,7 @@ router.post("/user/signup", async (req, res) => {
 
     await newUser.save();
 
-    const answer = {
+    const signupAnswer = {
       id: newUser._id,
       token: token,
       account: {
@@ -50,7 +51,7 @@ router.post("/user/signup", async (req, res) => {
       },
     };
 
-    res.json(answer);
+    res.json(signupAnswer);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -66,20 +67,31 @@ router.post("/user/login", async (req, res) => {
     const hash = SHA256(emailValidation.salt + password).toString(encBase64);
     //console.log(hash);
 
-    const Answer = {
+    const loginAnswer = {
       id: emailValidation._id,
       token: emailValidation.token,
       account: {
         username: emailValidation.account.username,
       },
     };
-    console.log(Answer);
+    console.log(loginAnswer);
 
     if (hash !== emailValidation.hash) {
       return res.status(401).json({ message: "Unauthorized" });
     } else {
-      res.json(Answer);
+      res.json(loginAnswer);
     }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.get("/user/favorites", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
+    );
+    res.status(200).json(response.data);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
