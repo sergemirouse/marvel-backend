@@ -91,23 +91,22 @@ router.post("/user/favorites", async (req, res) => {
   try {
     // je crée un tableau vide qui sera rempli lors de mes requêtes
     let result = [];
-
     // ici, je fais une boucle, tant que i est inférieur ou égal à la longueur du tableau en body, on fait une requête par tour de boucle, et on push les infos reçues en réponse dans le tableau créé précédemment
-
-    for (let i = 1; i <= req.body.length; i++) {
+    for (let i = 0; i < req.body.favorites.length; i++) {
       const response = await axios.get(
-        `https://lereacteur-marvel-api.herokuapp.com/character/${req.body}?apiKey=${process.env.MARVEL_API_KEY}`
+        `https://lereacteur-marvel-api.herokuapp.com/character/${req.body.favorites[i]}?apiKey=${process.env.MARVEL_API_KEY}`
       );
-
       result.push(response.data);
+      console.log(req.body.favorites);
+      console.log(result);
     }
-
-    console.log(result);
+    // console.log(result);
     // console.log(response.data);
-    // console.log(req.body);
+    // console.log(req.body.favorites);
     res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.meesage });
+    console.log(error.message);
   }
 });
 
