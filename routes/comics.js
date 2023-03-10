@@ -3,6 +3,8 @@ const router = express.Router();
 const axios = require("axios");
 
 router.get("/comics", async (req, res) => {
+  console.log("Ma route fonctionne");
+
   let { limit, skip, title } = req.query;
 
   if (!limit) {
@@ -21,7 +23,6 @@ router.get("/comics", async (req, res) => {
     );
     res.status(200).json(response.data);
     console.log(response.data);
-    console.log("Ma route fonctionne");
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

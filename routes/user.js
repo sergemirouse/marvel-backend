@@ -86,12 +86,26 @@ router.post("/user/login", async (req, res) => {
   }
 });
 
-router.get("/user/favorites", async (req, res) => {
+router.post("/user/favorites", async (req, res) => {
+  // console.log("fonctionne");
   try {
-    const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
-    );
-    res.status(200).json(response.data);
+    // je crée un tableau vide qui sera rempli lors de mes requêtes
+    let result = [];
+
+    // ici, je fais une boucle, tant que i est inférieur ou égal à la longueur du tableau en body, on fait une requête par tour de boucle, et on push les infos reçues en réponse dans le tableau créé précédemment
+
+    for (let i = 1; i <= req.body.length; i++) {
+      const response = await axios.get(
+        `https://lereacteur-marvel-api.herokuapp.com/character/${req.body}?apiKey=${process.env.MARVEL_API_KEY}`
+      );
+
+      result.push(response.data);
+    }
+
+    console.log(result);
+    // console.log(response.data);
+    // console.log(req.body);
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
